@@ -33,15 +33,38 @@ def pokedexx():
     language = language.get(language_choice, "english")
 
     print(f"You chose {language}.")
-    pokemon_name = input("Which pokemon are you looking for? ").strip()
+    if language == "english":
+        pokemon_name = input("Which pokemon are you looking for? ").strip()
+    elif language == "chinese":
+        pokemon_name = input("你在找哪只宝可梦? ").strip()
+    elif language == "japanese":
+        pokemon_name = input("どのポケモンを探してるの？ ").strip()
+    elif language == "french":
+        pokemon_name = input("Quel Pokémon cherches-tu ? ").strip()
 
     matches = []
+
     for pokemon in data:
-        if isinstance(pokemon, dict):
-            english_name = pokemon.get("name", {}).get("english", "")
-            if english_name.lower().startswith(pokemon_name.lower()):
-                matches.append(english_name)
+        if not isinstance(pokemon, dict):
+            continue
+        names = pokemon.get("name", {})
+
+        if language == "french":
+            name = names.get("french", "")
+        elif language == "english":
+            name = names.get("english", "")
+        elif language == "chinese":
+            name = names.get("chinese", "")
+        elif language == "japanese":
+            name = names.get("japanese", "")
+        else:
+            continue
+
+        if name.lower().startswith(pokemon_name.lower()):
+            matches.append(name)
+
         
+    
 
     if matches:
         print("Matches found:")
