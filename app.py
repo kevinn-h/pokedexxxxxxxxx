@@ -14,7 +14,6 @@ data = json.load(pokedex)
 
 # Based on user input, show all moves that a pokemon could learn based on their type. For example, if Charizard is fire/fyling, show all fire and flying moves. HINT import the moves.json file too!
 
-
 def pokedexx():
     print("Choose a language:")
     print("1. English")
@@ -41,37 +40,41 @@ def pokedexx():
         pokemon_name = input("どのポケモンを探してるの？ ").strip()
     elif language == "french":
         pokemon_name = input("Quel Pokémon cherches-tu ? ").strip()
+    while True:
+        matches = []
 
-    matches = []
+        for pokemon in data:
+            if not isinstance(pokemon, dict):
+                continue
+            names = pokemon.get("name", {})
 
-    for pokemon in data:
-        if not isinstance(pokemon, dict):
-            continue
-        names = pokemon.get("name", {})
+            if language == "french":
+                name = names.get("french", "")
+            elif language == "english":
+                name = names.get("english", "")
+            elif language == "chinese":
+                name = names.get("chinese", "")
+            elif language == "japanese":
+                name = names.get("japanese", "")
+            else:
+                continue
 
-        if language == "french":
-            name = names.get("french", "")
-        elif language == "english":
-            name = names.get("english", "")
-        elif language == "chinese":
-            name = names.get("chinese", "")
-        elif language == "japanese":
-            name = names.get("japanese", "")
-        else:
-            continue
+            if name.lower().startswith(pokemon_name.lower()):
+                matches.append(name)
 
-        if name.lower().startswith(pokemon_name.lower()):
-            matches.append(name)
-
+            
         
-    
 
-    if matches:
-        print("Matches found:")
-        for name in matches:
-            print(name)
-    else:
-        print(f"No Pokémon found matching '{pokemon_name}'.")
+        if matches:
+            print("Matches found:")
+            for name in matches:
+                print(name)
+        else:
+            print(f"No Pokémon found matching '{pokemon_name}'.")
+        break
+
+
+
 
 pokedexx()
 
