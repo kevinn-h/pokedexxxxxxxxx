@@ -32,6 +32,7 @@ def pokedexx():
     language = language.get(language_choice, "english")
 
     print(f"You chose {language}.")
+<<<<<<< HEAD
         
     pokemon_name = input("Which pokemon are you looking for? ").strip()
     
@@ -62,6 +63,17 @@ def pokedexx():
                     
                 print(f"No Pokémon found matching '{pokemon_name}'.")
             break
+=======
+    pokemon_name = input("Which pokemon are you looking for? ").strip()
+
+    matches = []
+    for pokemon in data:
+        if isinstance(pokemon, dict):
+            english_name = pokemon.get("name", {}).get("english", "")
+            if english_name.lower().startswith(pokemon_name.lower()):
+                matches.append(english_name)
+        
+>>>>>>> parent of 7e54854 (Update app.py)
 
 
 pokedexx()
