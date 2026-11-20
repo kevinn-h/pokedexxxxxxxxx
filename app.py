@@ -26,6 +26,7 @@ def get_choice(z):
 
 
 def languages():
+    global language
     print("Choose your language.")
     print("1. English")
     print("2. Chinese")
@@ -36,8 +37,8 @@ def languages():
     language = {
         "1": "english",
         "2": "chinese",
-        "3": "japanese",
-        "4": "french"
+        "3": "french",
+        "4": "Japanese"
     }
 
     language = language.get(language_choice, "english")
@@ -48,7 +49,7 @@ def languages():
         pokemon=item["name"]
         print(pokemon[language])
 
-    
+languages()
     
 def find_by_type():
     search_type = input("What type of Pokemon are you looking for? ")
@@ -58,4 +59,28 @@ def find_by_type():
         pokemon_types = pokemon["type"]
         print(pokemon_types[search_type])
 
-find_by_type()
+
+
+
+def find_pokemon():
+
+    matches=[]
+
+    find_name = input("what pokemon are you looking for?")
+
+    for pokemon in data:
+        if not isinstance(pokemon,dict):
+            continue
+        name = pokemon.get("name",{})
+
+        if find_name.lower() in name.get("english", "").lower():
+            matches.append(name)
+
+        if matches:
+            print("matches found")
+            for name in matches:
+                print(name)
+            choice = get_choice(matches)
+            print(f"pokemon chosen: {choice}")
+
+find_pokemon()
