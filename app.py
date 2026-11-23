@@ -12,19 +12,13 @@ data = json.load(pokedex)
 #Develop a function to find all pokemon matching the name the user searched for. Ex. if "Char" return Charmander, Charmeleon and Charizard. Make the user aware if no pokemon was found.
 
 # Based on user input, show all moves that a pokemon could learn based on their type. For example, if Charizard is fire/fyling, show all fire and flying moves. HINT import the moves.json file too!
-def get_choice(z):
-    while True:
-        user_input = input("enter the pokemon you were looking for:")
-        if user_input == 0:
-            print("try again")
-        else: 
-            matches = [item for item in z if item.lower() == user_input.lower()]
-            if matches:
-                return matches[0]
-            else:
-                print("invalid try again.")
+""" def pokedex():
+    for item in data:
+        pokemon=item["name"]
+        print(pokemon)
+pokedex() """
 
-
+i = 0
 def languages():
     global language
     print("Choose your language.")
@@ -38,7 +32,7 @@ def languages():
         "1": "english",
         "2": "chinese",
         "3": "french",
-        "4": "Japanese"
+        "4": "japanese"
     }
 
     language = language.get(language_choice, "english")
@@ -50,37 +44,29 @@ def languages():
         print(pokemon[language])
 
 languages()
+def type():
+    william = input("what type of pokemon are you looking for?")
+    matching_pokemon = []
+    for i in range(len(data)):
+        if william.capitalize() in data[i]["type"]:
+            matching_pokemon.append(data[i]["name"][language])
+    if len(matching_pokemon) == 0:
+        print(f"pokemon type {william} doesn't exist")
+    else:
+        print(matching_pokemon)
+
+type()
+
+def partial_name():
+    found = False
+    name = input("what pokemon are you looking for?")
+    for i in range(len(data)):
+        if name.lower() in data[i]["name"][language].lower():
+            print(data[i]["name"][language])
+            found = True
+        
+
+partial_name()
+            
     
-def find_by_type():
-    search_type = input("What type of Pokemon are you looking for? ")
-    
 
-    for pokemon in data:
-        pokemon_types = pokemon["type"]
-        print(pokemon_types[search_type])
-
-
-
-
-def find_pokemon():
-
-    matches=[]
-
-    find_name = input("what pokemon are you looking for?")
-
-    for pokemon in data:
-        if not isinstance(pokemon,dict):
-            continue
-        name = pokemon.get("name",{})
-
-        if find_name.lower() in name.get("english", "").lower():
-            matches.append(name)
-
-        if matches:
-            print("matches found")
-            for name in matches:
-                print(name)
-            choice = get_choice(matches)
-            print(f"pokemon chosen: {choice}")
-
-find_pokemon()
