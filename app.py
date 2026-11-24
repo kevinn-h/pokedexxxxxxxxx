@@ -4,7 +4,8 @@ pokedex = open("./pokedex.json", encoding="utf8")
 ## create variable "data" that represents the enitre pokedex list
 data = json.load(pokedex)
 # Create a function that will take the data from the JSON file and you will iterate through the list of pokemon and print each pokemons name.
-
+move_file = open("./moves.json", encoding="utf8")
+move= json.load(move_file)
 # Add a language choice feature and print the pokemons name based on the user input
 
 # Develop a function that creates a new list of pokemon based on the type the user searched for. If no pokemon was found of that type inform the user
@@ -64,9 +65,23 @@ def partial_name():
         if name.lower() in data[i]["name"][language].lower():
             print(data[i]["name"][language])
             found = True
-        
 
 partial_name()
+
+def find_moves():
+    name = input("what pokemon?")
+    found = False
+    for i in range(len(data)):
+        if name in data[i]["name"][language]:
+            type=data[i]["type"]
+            found = True
+            for t in type:
+                for i in range(len(move)):
+                    if t == move[i]["type"]:
+                        print(move[i]["ename"])
+
+find_moves()
+
             
     
 
